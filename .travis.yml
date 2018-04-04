@@ -1,8 +1,4 @@
-# safelist
-branches:
-  only:
-  - master
-#lets see how this works | creates to build jobs
+#lets see how this works | creates to build jobs 
 matrix:
   include:
     #android app 
@@ -21,9 +17,7 @@ matrix:
         - sudo apt-get install npm
         - sudo apt-get install node
         - cd taxiapp-customer
-        - sudo npm config set strict-ssl false
         - sudo npm install
-        - sudo npm update
         - sudo npm cache clean
         - sudo npm install -g cordova
         - echo y | android update sdk -u --filter android-22,android-26
@@ -37,16 +31,30 @@ matrix:
       release:
         - exit 0
       before_deploy:
-        - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+        cp -R "/home/travis/build/voxsar/taxihailing/taxiapp-customer/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk" $TRAVIS_BUILD_DIR
       deploy:
         provider: releases
         skip-cleanup: true
-        github-token: 7e3204ef990d3ebbfc56ab75aed2e9008af97a47  # Set in travis-ci.org dashboard, marked secure GITHUB_TOKEN
-        file: "/taxiapp-customer/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk"
+        api_key:
+          secure: $GITHUB_TOKEN # Set in travis-ci.org dashboard, marked secure GITHUB_TOKEN
+        file: $TRAVIS_BUILD_DIR/app-release-unsigned.apk
+        name: "$TRAVIS_TAG"
+        body: "## $TRAVIS_TAG
+              version $TRAVIS_TAG released from $TRAVIS_REPO_SLUG 
+              Released on successful build on Travis CI via deployment contains the
+              - iOS APK unsigned for testing
+              - Android unsigned APK for testing
+              *Build initated from $TRAVIS_COMMIT*
+              #### Feature Releases
+              - Improve the CI Features
+              #### Bug Fixes
+              - Fixed the yml files for travis
+              - Fixed the yml files for appveyor"
+        draft: false
         keep-history: true
         on:
           branch: master
-          tags: false
+          tags: true
   
     #ios deployment test | works but sandboxed debug file cannot be used
     - language: objective-c
@@ -58,7 +66,6 @@ matrix:
         - cd taxiapp-customer
         - sudo npm install
         - sudo npm cache clean
-        - sudo npm update
         - sudo npm install -g cordova
         - sudo npm cache clean -f
         - sudo npm install -g n
@@ -70,18 +77,30 @@ matrix:
       release:
         - exit 0
       before_deploy:
-        - git config --local user.name "voxsar"
-        - git config --local user.email "vo.x@outlook.com"
-        - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+        - zip -r $TRAVIS_BUILD_DIR/rotaract3220App.zip "/Users/travis/build/voxsar/taxihailing/taxiapp-customer/platforms/ios/build/emulator/taxiapp-customer.app"
       deploy:
         provider: releases
         skip-cleanup: true
-        github-token: 7e3204ef990d3ebbfc56ab75aed2e9008af97a47  # Set in travis-ci.org dashboard, marked secure GITHUB_TOKEN
-        file: "/taxiapp-customer/platforms/ios/build/emulator/Rotaract3220.app"
+        api_key:
+          secure: $GITHUB_TOKEN # Set in travis-ci.org dashboard, marked secure GITHUB_TOKEN
+        file: $TRAVIS_BUILD_DIR/rotaract3220App.zip
+        name: "$TRAVIS_TAG"
+        body: "## $TRAVIS_TAG
+              version $TRAVIS_TAG released from $TRAVIS_REPO_SLUG 
+              Released on successful build on Travis CI via deployment contains the
+              - iOS APK unsigned for testing
+              - Android unsigned APK for testing
+              *Build initated from $TRAVIS_COMMIT*
+              #### Feature Releases
+              - Improve the CI Features
+              #### Bug Fixes
+              - Fixed the yml files for travis
+              - Fixed the yml files for appveyor"
+        draft: false
         keep-history: true
         on:
           branch: master
-          tags: false
+          tags: true
 notifications:
   email: false
  
