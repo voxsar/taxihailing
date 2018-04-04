@@ -33,8 +33,7 @@ $$(document).on('page:init', function (e) {
 		speed: 400,
 		spaceBetween: 100
 	});
-	initMap();
-	myFunction();
+	initMap();;
 });
 
 function initMap() {
@@ -45,6 +44,14 @@ function initMap() {
 		disableDefaultUI: true,
 	});
 }
+
+
+document.addEventListener("deviceready", onDeviceReady, false);
+function onDeviceReady() {
+	myFunction();
+}
+
+
 
 function myFunction() {
 	navigator.geolocation.getCurrentPosition(onSuccess, onError);
