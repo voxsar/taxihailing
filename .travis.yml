@@ -21,6 +21,7 @@ matrix:
         - sudo apt-get install npm
         - sudo apt-get install node
         - cd taxiapp-customer
+        - sudo npm config set strict-ssl false
         - sudo npm install
         - sudo npm update
         - sudo npm cache clean
