@@ -79,7 +79,7 @@ matrix:
       release:
         - exit 0
       before_deploy:
-        - zip -r $TRAVIS_BUILD_DIR/rotaract3220App.zip "/Users/travis/build/voxsar/taxihailing/taxiapp-customer/platforms/ios/build/emulator/taxiapp-customer.app"
+        - zip -r $TRAVIS_BUILD_DIR/rotaract3220App.zip "/Users/travis/build/voxsar/taxihailing/taxiapp-customer/platforms/ios/build/emulator/HelloCordova.app"
       deploy:
         provider: releases
         skip-cleanup: true
