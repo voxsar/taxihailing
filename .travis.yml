@@ -41,7 +41,7 @@ matrix:
       deploy:
         provider: releases
         skip-cleanup: true
-        github-token: d0b637a1ea5e653251f7e36f7b66e56e553720fb  # Set in travis-ci.org dashboard, marked secure GITHUB_TOKEN
+        github-token: 0816c835f071e4bbbf08babc5eaf7afe24bcabea  # Set in travis-ci.org dashboard, marked secure GITHUB_TOKEN
         file: "/taxiapp-customer/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk"
         keep-history: true
         on:
