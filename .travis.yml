@@ -55,7 +55,7 @@ matrix:
         keep-history: true
         on:
           branch: master
-          tags: true
+          tags: false
   
     #ios deployment test | works but sandboxed debug file cannot be used
     - language: objective-c
@@ -102,7 +102,7 @@ matrix:
         keep-history: true
         on:
           branch: master
-          tags: true
+          tags: false
 notifications:
   email: false
  
