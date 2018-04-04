@@ -53,9 +53,10 @@ matrix:
       install:
         - brew install npm
         - brew install node
-        - cd rotaract3220
+        - cd taxiapp-customer
         - sudo npm install
         - sudo npm cache clean
+        - sudo npm update
         - sudo npm install -g cordova
         - sudo npm cache clean -f
         - sudo npm install -g n
@@ -74,7 +75,7 @@ matrix:
         provider: releases
         skip-cleanup: true
         github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure GITHUB_TOKEN
-        file: "/rotaract3220/platforms/ios/build/emulator/Rotaract3220.app"
+        file: "/taxiapp-customer/platforms/ios/build/emulator/Rotaract3220.app"
         keep-history: true
         on:
           branch: master
